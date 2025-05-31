@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Intranet</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .tab-pane {
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Painel Administrativo</h3>
+    <span class="text-muted">Logado como: {{ session.username }}</span>
+    <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">Sair</a>
+  </div>
+
+  <!-- Menu de Abas -->
+  <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#comunicados">Comunicados</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#links">Links Rápidos</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#ramais">Ramais</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#aniversario">Aniversário</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#compliance">Compliance</button>
+    </li>
+  </ul>
+
+  <!-- Conteúdo das Abas -->
+  <div class="tab-content">
+
+    <!-- COMUNICADOS -->
+    <div class="tab-pane fade show active" id="comunicados">
+      {% include 'admin_partials/comunicados.html' %}
+    </div>
+
+    <!-- LINKS RÁPIDOS -->
+    <div class="tab-pane fade" id="links">
+      {% include 'admin_partials/links_rapidos.html' %}
+    </div>
+
+    <!-- RAMAIS -->
+    <div class="tab-pane fade" id="ramais">
+      {% include 'admin_partials/ramais.html' %}
+    </div>
+
+    <!-- ANIVERSÁRIO -->
+    <div class="tab-pane fade" id="aniversario">
+      {% include 'admin_partials/aniversario.html' %}
+    </div>
+
+    <!-- COMPLIANCE -->
+    <div class="tab-pane fade" id="compliance">
+      {% include 'admin_partials/compliance.html' %}
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

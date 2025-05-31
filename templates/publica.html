@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Intranet Pública</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
+
+</head>
+<body style="background-color: #e5e5e5;">
+
+<!-- 🔝 NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="position: relative; z-index: 1050; font-family: 'Poppins', sans-serif;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="{{ url_for('static', filename='img/logo_acqua.png') }}" alt="Logo" width="120">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+
+        <!-- Menu suspenso 1 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Serviços</a>
+          <ul class="dropdown-menu" style="background-color: #207D9E; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 6px;">
+
+        <li>
+          <a class="dropdown-item" href="#" 
+            style="color: white !important; transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">
+            <img src="{{ url_for('static', filename='img/icon_salutem.svg') }}" 
+                style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+            Salutem
+          </a>
+        </li>
+
+        <li>
+          <a class="dropdown-item" href="#" 
+            style="color: white !important; transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">
+            <img src="{{ url_for('static', filename='img/icon_dgs.svg') }}" 
+                style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+            Laboratório DGS
+          </a>
+        </li>
+
+        <li>
+          <a class="dropdown-item" href="#" 
+            style="color: white !important; transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">
+            <i class="fas fa-procedures" 
+              style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; display: inline-block;"></i>
+            Epimed
+          </a>
+        </li>
+
+        <li>
+          <a class="dropdown-item" href="#" 
+            style="color: white !important; transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">
+            <img src="{{ url_for('static', filename='img/icon_proradis.svg') }}" 
+                style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+            SmartRIS PRORADIS
+          </a>
+        </li>
+
+        <li>
+          <a class="dropdown-item" href="#" 
+            style="color: white !important; transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">
+            <i class="fas fa-network-wired" 
+              style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; display: inline-block;"></i>
+            Interact
+          </a>
+        </li>
+
+        <li>
+          <a class="dropdown-item" href="#" 
+            style="color: white !important; transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">
+            <img src="{{ url_for('static', filename='img/icon_med+.svg') }}" 
+                style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
+            Med+ Diagnóstico & Imagem
+          </a>
+        </li>
+
+       <li>
+          <a class="dropdown-item" href="#" 
+            style="color: white !important; transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">
+            <i class="fas fa-envelope" 
+              style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; display: inline-block;"></i>
+            Webmail
+          </a>
+        </li>
+
+        <li>
+          <a class="dropdown-item" href="#" 
+            style="color: white !important; transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">
+            <i class="fas fa-database" 
+              style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; display: inline-block;"></i>
+            GTR - Gestão de Ticket Refeição
+          </a>
+        </li>
+
+      </ul>
+        </li>
+
+        <!-- Menu suspenso 2 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Abrir Chamados</a>
+          <ul class="dropdown-menu" style="background-color: #207D9E; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 6px;">
+            <li><a class="dropdown-item" href="#" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">TI</a></li>
+            <li><a class="dropdown-item" href="#" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">Manutenção</a></li>
+          </ul>
+        </li>
+
+        <!-- Menu suspenso 3 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">EGS</a>
+          <ul class="dropdown-menu" style="background-color: #207D9E; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 6px;">
+            <li><a class="dropdown-item" href="#" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">Alimentação</a></li>
+            <li><a class="dropdown-item" href="#" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">Relatórios</a></li>
+          </ul>
+        </li>
+
+        <!-- Botão Login -->
+        <li class="nav-item">
+          <a class="btn btn-outline-primary ms-3" href="{{ url_for('login') }}">Login</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- 📰 Conteúdo -->
+<div class="container-fluid" style="padding-left: 15px; padding-right: 15px; margin-top: 20px;">
+  <div class="row g-3">
+
+    <!-- Comunicados da Empresa - col 7 -->
+    <div class="col-md-7 px-0" style="margin-left: 0;">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Comunicados da Empresa</h5>
+        </div>
+        <div class="card-body" style="max-height: 800px; overflow-y: auto;">
+            {% for post in posts %}
+          <div style="background-color: #fbfbfb; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+            <div class="d-flex align-items-start gap-3">
+              {% if post[4] %}
+                <img src="{{ url_for('static', filename=post[4]) }}" 
+                  class="rounded" 
+                  alt="Imagem do post" 
+                  style="max-width: 400px; max-height: 300px; width: 100%; height: auto; object-fit: contain;">
+              {% elif post[5] %}
+                <video controls 
+                      class="rounded" 
+                      style="max-width: 400px; max-height: 300px; width: 100%; height: auto; object-fit: contain;">
+                  <source src="{{ url_for('static', filename=post[5]) }}" type="video/mp4">
+                  Seu navegador não suporta vídeo.
+                </video>
+              {% endif %}
+
+              <div class="flex-grow-1" style="display: flex; flex-direction: column; height: 100%; word-wrap: break-word; overflow-wrap: break-word; white-space: normal; max-width: calc(100% - 420px);">
+                <h5 class="card-title">{{ post[0] }}</h5>
+                <p class="card-text">{{ post[1] }}</p>
+                <div class="d-flex justify-content-between" style="margin-top: auto;">
+                  <small class="text-muted">Por: {{ post[3] }}</small>
+                  <small class="text-muted">
+                    {{ post[2].strftime("%d/%m/%Y %H:%M") if post[2] else '' }}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔗 Lateral Direita -->
+        <div class="col-md-5"> 
+
+        <div class="row g-2">
+
+            <!-- Links Rápidos (metade da largura) -->
+            <div class="col-6" style="max-height: 300px; overflow-y: auto;">
+            <div class="card bg-light h-100">
+                <div class="card-header bg-primary text-white">
+                Links Rápidos
+                </div>
+                <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+                <ul class="list-group list-group-flush">
+                    {% for link in links %}
+                    {% set icon_map = {
+                        'forms': 'bi-file-earmark-text',
+                        'slide': 'bi-file-earmark-ppt',
+                        'doc': 'bi-file-earmark-word',
+                        'pdf': 'bi-file-earmark-pdf',
+                        'link': 'bi-link-45deg',
+                        'video': 'bi-play-btn',
+                        'default': 'bi-file-earmark'
+                    } %}
+                    {% set icon_class = icon_map.get(link[2], 'bi-file-earmark') %}
+                    <li class="list-group-item d-flex align-items-center gap-2">
+                    <i class="bi {{ icon_class }} fs-5 text-primary"></i>
+                    <a href="{{ link[1] }}" target="_blank" rel="noopener noreferrer">{{ link[0] }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+            </div>
+
+            <!-- Ramais (metade da largura) -->
+            <div class="col-6" style="max-height: 300px; overflow-y: auto;">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                Ramais
+                </div>
+                <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+                {% for andar, setores in ramais.items() %}
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered mb-0">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                        <th colspan="2" class="bg-light text-dark text-center">{{ andar }}</th>
+                        </tr>
+                        <tr>
+                        <th>Setor</th>
+                        <th>Ramal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for setor, ramal in setores %}
+                        <tr>
+                        <td>{{ setor }}</td>
+                        <td>{{ ramal }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+            </div>
+            
+            <!-- Aniversário (metade da larguda segundo nivel) -->
+            <div class="col-6 mt-2">
+            <div class="card h-100">
+                <div class="card-header bg-info text-white">
+                Aniversário
+                </div>
+                <div class="card-body p-2 d-flex justify-content-center">
+                <img src="{{ url_for('static', filename='img/aniversario.jpg') }}" alt="Aniversário" class="img-fluid" style="max-height: 300px;">
+                </div>
+            </div>
+            </div>
+
+            <!-- Compliance (metade da larguda segundo nivel) -->
+            <div class="col-6 mt-2">
+            <div class="card h-100">
+                <div class="card-header bg-warning text-white">
+                Compliance
+                </div>
+                <div class="card-body p-2 d-flex justify-content-center">
+                <img src="{{ url_for('static', filename='img/compliance.png') }}" alt="Compliance" class="img-fluid" style="max-height: 300px;">
+                </div>
+            </div>
+            </div>
+
+            <!-- Nova seção com imagens linkáveis(metade da larguda terceiro nivel) -->
+            <div class="row mt-4">
+              <div class="col-md-6 mb-3">
+                <a href="https://app.apontatu.com.br/credenciamento/login/" target="_blank">
+                  <img src="{{ url_for('static', filename='img/logo_apontatu.png') }}"
+                      alt="Descrição imagem 1"
+                      class="img-fluid rounded shadow-sm w-100"
+                      style="max-height: 180px; object-fit: cover;">
+                </a>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <a href="https://www.sciweb.com.br/" target="_blank">
+                  <img src="{{ url_for('static', filename='img/logo_sciweb.png') }}"
+                      alt="Descrição imagem 2"
+                      class="img-fluid rounded shadow-sm w-100"
+                      style="max-height: 180px; object-fit: cover;">
+                </a>
+              </div>
+            </div>
+
+        </div>
+
+        
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
