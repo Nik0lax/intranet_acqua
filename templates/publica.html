@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Intranet Pública</title>
+  <title>Intranet Acqua</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="position: relative; z-index: 1050; font-family: 'Poppins', sans-serif;">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
-      <img src="{{ url_for('static', filename='img/logo_acqua.png') }}" alt="Logo" width="120">
+      <img src="{{ url_for('static', filename='img/logo_acqua.png') }}" alt="Logo" width="150">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -31,7 +31,7 @@
           <ul class="dropdown-menu" style="background-color: #207D9E; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 6px;">
 
         <li>
-          <a class="dropdown-item" href="#" 
+          <a class="dropdown-item" href="https://psbengui.sistemasalutem.com.br:9004/hospitalar/#/login" 
             style="color: white !important; transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">
@@ -42,18 +42,18 @@
         </li>
 
         <li>
-          <a class="dropdown-item" href="#" 
+          <a class="dropdown-item" href="https://laudos.mobilemed.com.br/login" 
             style="color: white !important; transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">
             <img src="{{ url_for('static', filename='img/icon_dgs.svg') }}" 
                 style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-            Laboratório DGS
+            Telerradiologia MobileMED
           </a>
         </li>
 
         <li>
-          <a class="dropdown-item" href="#" 
+          <a class="dropdown-item" href="https://sso.epimedmonitor.com/Account/Login?ReturnUrl" 
             style="color: white !important; transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">
@@ -64,18 +64,7 @@
         </li>
 
         <li>
-          <a class="dropdown-item" href="#" 
-            style="color: white !important; transition: background-color 0.3s;"
-            onmouseover="this.style.backgroundColor='#555';" 
-            onmouseout="this.style.backgroundColor='';">
-            <img src="{{ url_for('static', filename='img/icon_proradis.svg') }}" 
-                style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">
-            SmartRIS PRORADIS
-          </a>
-        </li>
-
-        <li>
-          <a class="dropdown-item" href="#" 
+          <a class="dropdown-item" href="https://172.16.0.21:8443/sa/apps/cmn/LauncherLogin.jsp" 
             style="color: white !important; transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">
@@ -86,7 +75,7 @@
         </li>
 
         <li>
-          <a class="dropdown-item" href="#" 
+          <a class="dropdown-item" href="https://medmaispara.uniexames.com.br/logins/login" 
             style="color: white !important; transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">
@@ -97,7 +86,7 @@
         </li>
 
        <li>
-          <a class="dropdown-item" href="#" 
+          <a class="dropdown-item" href="https://webmail.institutoacqua.org.br/" 
             style="color: white !important; transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">
@@ -108,7 +97,7 @@
         </li>
 
         <li>
-          <a class="dropdown-item" href="#" 
+          <a class="dropdown-item" href="http://172.16.10.131:8000/" 
             style="color: white !important; transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">
@@ -125,10 +114,12 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Abrir Chamados</a>
           <ul class="dropdown-menu" style="background-color: #207D9E; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 6px;">
-            <li><a class="dropdown-item" href="#" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            <li><a class="dropdown-item" href="http://glpi/glpi/front/central.php" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">TI</a></li>
-            <li><a class="dropdown-item" href="#" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            <li><a class="dropdown-item" href="http://glpi/manutencao/" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">Manutenção</a></li>
+            <li><a class="dropdown-item" href="https://mgmedical.neovero.com/login" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">Engenharia Clinica</a></li>
           </ul>
         </li>
 
@@ -136,11 +127,18 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">EGS</a>
           <ul class="dropdown-menu" style="background-color: #207D9E; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 6px;">
-            <li><a class="dropdown-item" href="#" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            <li><a class="dropdown-item" href="https://sistema-egs.top/proj/login.php" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">Alimentação</a></li>
-            <li><a class="dropdown-item" href="#" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            <li><a class="dropdown-item" href="https://sistema-egs.top/rel/login.php" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">Relatórios</a></li>
           </ul>
+        </li>
+        
+        <!-- Link para o WhatsApp do TI -->
+        <li class="nav-item d-flex align-items-center">
+          <a href="#" target="_blank" class="nav-link text-success fw-bold">
+            WhatsApp TI <i class="fab fa-whatsapp me-1"></i> 
+          </a>
         </li>
 
         <!-- Botão Login -->
@@ -161,9 +159,9 @@
     <div class="col-md-7 px-0" style="margin-left: 0;">
       <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-          <h5 class="mb-0">Comunicados da Empresa</h5>
+          <h5 class="mb-0">Comunicados</h5>
         </div>
-        <div class="card-body" style="max-height: 800px; overflow-y: auto;">
+        <div class="card-body" style="max-height: 670px; overflow-y: auto;">
             {% for post in posts %}
           <div style="background-color: #fbfbfb; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
             <div class="d-flex align-items-start gap-3">
@@ -232,8 +230,51 @@
             </div>
             </div>
 
+            <!-- Compliance (metade da largura segundo nível) -->
+            <div class="col-6 mt-2" style="max-height: 350px; overflow-y: auto;">
+              <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                  Compliance
+                </div>
+                <div class="card-body p-2">
+                {% if compliance|length > 0 %}
+                  <div id="carouselCompliance" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
+                    <!-- Indicators/dots -->
+                    <div class="carousel-indicators">
+                      {% for i in range(compliance|length) %}
+                        <button type="button" data-bs-target="#carouselCompliance" data-bs-slide-to="{{ i }}" class="{% if i == 0 %}active{% endif %}" aria-current="{% if i == 0 %}true{% endif %}" aria-label="Slide {{ i + 1 }}"></button>
+                      {% endfor %}
+                    </div>
+
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+                      {% for item in compliance %}
+                        <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+                          <img src="{{ url_for('static', filename=item[1]) }}" class="d-block mx-auto img-thumbnail" alt="Compliance" style="max-height: 230px; object-fit: contain;">
+                        </div>
+                      {% endfor %}
+                    </div>
+
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCompliance" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCompliance" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Próximo</span>
+                    </button>
+                  </div>
+                {% else %}
+                  <p class="text-muted text-center">Nenhuma imagem de compliance cadastrada.</p>
+                {% endif %}
+              </div>
+              </div>
+            </div>
+
+
             <!-- Ramais (metade da largura) -->
-            <div class="col-6" style="max-height: 300px; overflow-y: auto;">
+            <div class="col-6 mt-2" style="max-height: 300px; overflow-y: auto;">
             <div class="card h-100">
                 <div class="card-header bg-primary text-white">
                 Ramais
@@ -266,29 +307,54 @@
             </div>
             </div>
             
-            <!-- Aniversário (metade da larguda segundo nivel) -->
-            <div class="col-6 mt-2">
-            <div class="card h-100">
-                <div class="card-header bg-info text-white">
-                Aniversário
+            <!-- Aniversário (metade da largura segundo nível) -->
+            <div class="col-6 mt-2" style="max-height: 350px; overflow-y: auto;">
+              <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                  Aniversariantes do Mês
                 </div>
-                <div class="card-body p-2 d-flex justify-content-center">
-                <img src="{{ url_for('static', filename='img/aniversario.jpg') }}" alt="Aniversário" class="img-fluid" style="max-height: 300px;">
-                </div>
-            </div>
+                <div class="card-body p-2">
+                {% if aniversariantes|length > 0 %}
+                  <div id="carouselAniversariantes" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
+                    <!-- Indicators/dots -->
+                    <div class="carousel-indicators">
+                      {% for i in range(aniversariantes|length) %}
+                        <button type="button" data-bs-target="#carouselAniversariantes" data-bs-slide-to="{{ i }}" class="{% if i == 0 %}active{% endif %}" aria-current="{% if i == 0 %}true{% endif %}" aria-label="Slide {{ i + 1 }}"></button>
+                      {% endfor %}
+                    </div>
+
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+                      {% for aniversariante in aniversariantes %}
+                        <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+                          <img src="{{ url_for('static', filename=aniversariante[1]) }}" class="d-block mx-auto img-thumbnail" alt="Aniversariante" style="max-height: 230px; object-fit: contain;">
+                          <!-- Se quiser exibir nome, pode colocar aqui, ex: -->
+                          <!-- <div class="carousel-caption d-none d-md-block">
+                            <h5>{{ aniversariante[2] }}</h5>
+                          </div> -->
+                        </div>
+                      {% endfor %}
+                    </div>
+
+                    <!-- Controls (opcional) -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselAniversariantes" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselAniversariantes" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Próximo</span>
+                    </button>
+                  </div>
+                {% else %}
+                  <p class="text-muted text-center">Nenhum aniversariante cadastrado.</p>
+                {% endif %}
+              </div>
+              </div>
             </div>
 
-            <!-- Compliance (metade da larguda segundo nivel) -->
-            <div class="col-6 mt-2">
-            <div class="card h-100">
-                <div class="card-header bg-warning text-white">
-                Compliance
-                </div>
-                <div class="card-body p-2 d-flex justify-content-center">
-                <img src="{{ url_for('static', filename='img/compliance.png') }}" alt="Compliance" class="img-fluid" style="max-height: 300px;">
-                </div>
-            </div>
-            </div>
+
+
 
             <!-- Nova seção com imagens linkáveis(metade da larguda terceiro nivel) -->
             <div class="row mt-4">
@@ -296,7 +362,7 @@
                 <a href="https://app.apontatu.com.br/credenciamento/login/" target="_blank">
                   <img src="{{ url_for('static', filename='img/logo_apontatu.png') }}"
                       alt="Descrição imagem 1"
-                      class="img-fluid rounded shadow-sm w-100"
+                      class="img-fluid rounded shadow-sm w-100 no-modal"
                       style="max-height: 180px; object-fit: cover;">
                 </a>
               </div>
@@ -305,7 +371,7 @@
                 <a href="https://www.sciweb.com.br/" target="_blank">
                   <img src="{{ url_for('static', filename='img/logo_sciweb.png') }}"
                       alt="Descrição imagem 2"
-                      class="img-fluid rounded shadow-sm w-100"
+                      class="img-fluid rounded shadow-sm w-100 no-modal"
                       style="max-height: 180px; object-fit: cover;">
                 </a>
               </div>
@@ -315,8 +381,38 @@
 
         
 </div>
+<!-- Modal para imagem ampliada -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-body text-center p-0">
+        <img src="" id="modalImage" class="img-fluid rounded shadow" alt="Imagem ampliada">
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Pega só as imagens que NÃO têm a classe 'no-modal'
+    const imgs = document.querySelectorAll('img:not(.no-modal)');
+
+    imgs.forEach(img => {
+      img.addEventListener('click', function () {
+        const src = this.getAttribute('src');
+        const modalImg = document.getElementById('modalImage');
+        modalImg.setAttribute('src', src);
+
+        // Abre o modal
+        const myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        myModal.show();
+      });
+    });
+  });
+</script>
+
 </body>
 </html>

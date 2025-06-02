@@ -43,6 +43,14 @@ def home():
     cur.execute("SELECT andar, setor, ramal FROM ramais")
     raw_ramais = cur.fetchall()
 
+    #puxando aniversários no Banco de Dados
+    cur.execute("SELECT * FROM aniversariantes ORDER BY id DESC")
+    aniversariantes = cur.fetchall()
+
+    #puxando compliance no Banco de Dados
+    cur.execute("SELECT * FROM compliance ORDER BY id DESC")
+    compliance = cur.fetchall()
+
     cur.close()
 
     # definido ordem dos andares
@@ -69,7 +77,7 @@ def home():
     # Usa OrderedDict para garantir a ordem no template
     ramais_ordenado = OrderedDict((andar, ramais_por_andar[andar]) for andar in ordem_andares if ramais_por_andar[andar])
 
-    return render_template('publica.html', posts=posts, links=links ,ramais=ramais_ordenado)
+    return render_template('publica.html', posts=posts, links=links ,ramais=ramais_ordenado, aniversariantes=aniversariantes, compliance=compliance)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -104,12 +112,18 @@ def logout():
 def admin():
     form_type = request.form.get('form_type')
 
-    # GET - Buscar os comunicados, links do banco
+    # GET - Buscar os comunicados, links do banco, ramais, aniversariantes e compliance
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute("SELECT * FROM publicacoes ORDER BY id DESC")
     comunicados = cur.fetchall()
     cur.execute("SELECT * FROM links_rapidos ORDER BY id DESC")
     links_rapidos = cur.fetchall()
+    cur.execute("SELECT * FROM ramais ORDER BY andar, setor")
+    ramais = cur.fetchall()
+    cur.execute("SELECT * FROM aniversariantes ORDER BY id DESC")
+    aniversariantes = cur.fetchall()
+    cur.execute("SELECT * FROM compliance ORDER BY id DESC")
+    compliance = cur.fetchall()
     cur.close()
 
     #Criar uma postagem
@@ -168,7 +182,69 @@ def admin():
 
         flash('Link rápido criado com sucesso!', 'success')
         return redirect(url_for('admin'))
-    return render_template('admin.html', comunicados=comunicados, links_rapidos=links_rapidos)
+    
+    #Criar um ramal
+    elif form_type == 'ramal':
+        andar = request.form['andar']
+        setor = request.form['setor']
+        ramal = request.form['ramal']
+
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            INSERT INTO ramais (andar, setor, ramal)
+            VALUES (%s, %s, %s)
+        """, (andar, setor, ramal))
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Ramal adicionado com sucesso!', 'success')
+        return redirect(url_for('admin'))
+
+    #Criar um aniversario
+    elif form_type == 'aniversariante':
+        imagem_file = request.files.get('imagem')
+        imagem_path = None
+
+        if imagem_file and imagem_file.filename != '' and allowed_file(imagem_file.filename):
+            ext = imagem_file.filename.rsplit('.', 1)[1].lower()
+            nome_unico = f"{uuid.uuid4()}.{ext}"
+            imagem_file.save(os.path.join(UPLOAD_FOLDER, nome_unico))
+            imagem_path = f'uploads/{nome_unico}'
+
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO aniversariantes (imagem) VALUES (%s)", (imagem_path,))
+            mysql.connection.commit()
+            cur.close()
+
+            flash('Aniversariante adicionado com sucesso!', 'success')
+        else:
+            flash('Formato de imagem inválido.', 'danger')
+
+        return redirect(url_for('admin'))
+
+    #Criar um compliance
+    elif form_type == 'compliance':
+        imagem_file = request.files.get('imagem')
+        imagem_path = None
+
+        if imagem_file and imagem_file.filename != '' and allowed_file(imagem_file.filename):
+            ext = imagem_file.filename.rsplit('.', 1)[1].lower()
+            nome_unico = f"{uuid.uuid4()}.{ext}"
+            imagem_file.save(os.path.join(UPLOAD_FOLDER, nome_unico))
+            imagem_path = f'uploads/{nome_unico}'
+
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO compliance (imagem) VALUES (%s)", (imagem_path,))
+            mysql.connection.commit()
+            cur.close()
+
+            flash('compliance adicionado com sucesso!', 'success')
+        else:
+            flash('Formato de imagem inválido.', 'danger')
+
+        return redirect(url_for('admin'))
+
+    return render_template('admin.html', comunicados=comunicados, links_rapidos=links_rapidos, ramais=ramais, aniversariantes=aniversariantes, compliance=compliance)
 
 @app.route('/admin/comunicado/deletar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
@@ -264,5 +340,127 @@ def deletar_link_rapido(id):
     flash('Link rápido deletado com sucesso!', 'success')
     return redirect(url_for('admin'))
 
+@app.route('/admin/ramal/editar/<int:id>', methods=['POST'])
+@login_required(roles=['comunicacao', 'admin'])
+def editar_ramal(id):
+    andar = request.form['andar']
+    setor = request.form['setor']
+    ramal = request.form['ramal']
+
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        UPDATE ramais
+        SET andar = %s, setor = %s, ramal = %s
+        WHERE id = %s
+    """, (andar, setor, ramal, id))
+    mysql.connection.commit()
+    cur.close()
+
+    flash('Ramal atualizado com sucesso!', 'success')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/ramal/deletar/<int:id>', methods=['POST'])
+@login_required(roles=['comunicacao', 'admin'])
+def deletar_ramal(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM ramais WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+
+    flash('Ramal deletado com sucesso!', 'success')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/aniversariante/deletar/<int:id>', methods=['POST'])
+@login_required(roles=['comunicacao', 'admin'])
+def deletar_aniversariante(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT imagem FROM aniversariantes WHERE id = %s", (id,))
+    imagem = cur.fetchone()
+    if imagem:
+        imagem_path = os.path.join('static', imagem[0])
+        if os.path.exists(imagem_path):
+            os.remove(imagem_path)
+
+    cur.execute("DELETE FROM aniversariantes WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    flash('Aniversariante deletado com sucesso!', 'success')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/aniversariante/editar/<int:id>', methods=['POST'])
+@login_required(roles=['comunicacao', 'admin'])
+def editar_aniversariante(id):
+    imagem_file = request.files.get('imagem')
+
+    if imagem_file and imagem_file.filename != '' and allowed_file(imagem_file.filename):
+        ext = imagem_file.filename.rsplit('.', 1)[1].lower()
+        nome_unico = f"{uuid.uuid4()}.{ext}"
+        imagem_file.save(os.path.join(UPLOAD_FOLDER, nome_unico))
+        imagem_path = f'uploads/{nome_unico}'
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT imagem FROM aniversariantes WHERE id = %s", (id,))
+        antiga = cur.fetchone()
+        if antiga:
+            antiga_path = os.path.join('static', antiga[0])
+            if os.path.exists(antiga_path):
+                os.remove(antiga_path)
+
+        cur.execute("UPDATE aniversariantes SET imagem = %s WHERE id = %s", (imagem_path, id))
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Imagem atualizada com sucesso!', 'success')
+    else:
+        flash('Erro ao atualizar imagem.', 'danger')
+
+    return redirect(url_for('admin'))
+
+@app.route('/admin/compliance/deletar/<int:id>', methods=['POST'])
+@login_required(roles=['comunicacao', 'admin'])
+def deletar_compliance(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT imagem FROM compliance WHERE id = %s", (id,))
+    imagem = cur.fetchone()
+    if imagem:
+        imagem_path = os.path.join('static', imagem[0])
+        if os.path.exists(imagem_path):
+            os.remove(imagem_path)
+
+    cur.execute("DELETE FROM compliance WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    flash('Compliance deletado com sucesso!', 'success')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/compliance/editar/<int:id>', methods=['POST'])
+@login_required(roles=['comunicacao', 'admin'])
+def editar_compliance(id):
+    imagem_file = request.files.get('imagem')
+
+    if imagem_file and imagem_file.filename != '' and allowed_file(imagem_file.filename):
+        ext = imagem_file.filename.rsplit('.', 1)[1].lower()
+        nome_unico = f"{uuid.uuid4()}.{ext}"
+        imagem_file.save(os.path.join(UPLOAD_FOLDER, nome_unico))
+        imagem_path = f'uploads/{nome_unico}'
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT imagem FROM compliance WHERE id = %s", (id,))
+        antiga = cur.fetchone()
+        if antiga:
+            antiga_path = os.path.join('static', antiga[0])
+            if os.path.exists(antiga_path):
+                os.remove(antiga_path)
+
+        cur.execute("UPDATE compliance SET imagem = %s WHERE id = %s", (imagem_path, id))
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Imagem atualizada com sucesso!', 'success')
+    else:
+        flash('Erro ao atualizar imagem.', 'danger')
+
+    return redirect(url_for('admin'))
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

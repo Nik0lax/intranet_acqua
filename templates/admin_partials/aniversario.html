@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aniversariantes</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="container mt-4">
+
+  <div class="mt-3">
+    <h5 class="mb-3">Novo Aniversariante</h5>
+    <form method="POST" action="{{ url_for('admin') }}" enctype="multipart/form-data">
+      <input type="hidden" name="form_type" value="aniversariante" />
+      <div class="mb-3">
+        <label class="form-label">Imagem (JPG, PNG...)</label>
+        <input type="file" name="imagem" class="form-control" accept="image/*" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Adicionar Imagem</button>
+    </form>
+  </div>
+
+  <hr class="my-4" />
+
+  <div>
+    <h5 class="mb-3">Aniversariantes Recentes</h5>
+    {% if aniversariantes %}
+      <div class="row">
+        {% for a in aniversariantes %}
+          <div class="col-md-3 mb-4">
+            <div class="card">
+              <img src="{{ url_for('static', filename=a['imagem']) }}" class="card-img-top" alt="Imagem Aniversariante" />
+              <div class="card-body text-center">
+
+                <!-- Botão Editar (abre modal) -->
+                <button type="button" class="btn btn-sm btn-warning edit-btn"
+                  data-id="{{ a['id'] }}">
+                  Editar
+                </button>
+
+                <!-- Botão Excluir -->
+                <form method="POST" action="{{ url_for('deletar_aniversariante', id=a['id']) }}"
+                  onsubmit="return confirm('Tem certeza que deseja excluir esta imagem?')" style="display:inline;">
+                  <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted">Nenhuma imagem cadastrada ainda.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Modal Editar Aniversariante -->
+<div class="modal fade" id="editAniversarianteModal" tabindex="-1" aria-labelledby="editAniversarianteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" id="editAniversarianteForm" enctype="multipart/form-data">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editAniversarianteLabel">Editar Aniversariante</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <input type="file" name="imagem" class="form-control" accept="image/*" required />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('editAniversarianteForm');
+
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        form.action = `/admin/aniversariante/editar/${id}`;
+        const modal = new bootstrap.Modal(document.getElementById('editAniversarianteModal'));
+        modal.show();
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
