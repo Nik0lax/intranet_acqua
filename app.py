@@ -11,7 +11,7 @@ import os
 import MySQLdb
 
 app = Flask(__name__)
-app.secret_key = 'intranet_acqua'  # pode jogar isso no .env também
+app.secret_key = 'intranet_acqua' 
 app.config.from_object(Config)
 
 mysql = MySQL(app)
@@ -20,7 +20,7 @@ mysql = MySQL(app)
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Extensões permitidas
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'webp'}
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -39,10 +39,6 @@ def home():
     cur.execute("SELECT titulo, url, tipo FROM links_rapidos ORDER BY titulo")
     links = cur.fetchall()
     
-    #puxando ramais no Banco de Dados
-    cur.execute("SELECT andar, setor, ramal FROM ramais")
-    raw_ramais = cur.fetchall()
-
     #puxando aniversários no Banco de Dados
     cur.execute("SELECT * FROM aniversariantes ORDER BY id DESC")
     aniversariantes = cur.fetchall()
@@ -51,33 +47,14 @@ def home():
     cur.execute("SELECT * FROM compliance ORDER BY id DESC")
     compliance = cur.fetchall()
 
+    #puxando noticias externas no Banco de Dados
+    cur.execute("SELECT * FROM noticias_externas ORDER BY data_publicacao DESC, criado_em DESC")
+    colunas = [col[0] for col in cur.description]  # pega o nome das colunas
+    noticias_externas = [dict(zip(colunas, row)) for row in cur.fetchall()]
+
     cur.close()
 
-    # definido ordem dos andares
-    ordem_andares = [
-        'Térreo',
-        '1° Andar',
-        '2° Andar',
-        '3° Andar',
-        '4° Andar',
-        '5° Andar',
-        '6° Andar',
-        '7° Andar',
-        '8° Andar',
-        '9° Andar',
-        '10° Andar'
-    ]
-
-    # Monta o dicionário agrupado por andar
-    ramais_por_andar = {andar: [] for andar in ordem_andares}
-    for andar, setor, ramal in raw_ramais:
-        if andar in ramais_por_andar:
-            ramais_por_andar[andar].append((setor, ramal))
-
-    # Usa OrderedDict para garantir a ordem no template
-    ramais_ordenado = OrderedDict((andar, ramais_por_andar[andar]) for andar in ordem_andares if ramais_por_andar[andar])
-
-    return render_template('publica.html', posts=posts, links=links ,ramais=ramais_ordenado, aniversariantes=aniversariantes, compliance=compliance)
+    return render_template('publica.html', posts=posts, links=links , aniversariantes=aniversariantes, compliance=compliance, noticias_externas=noticias_externas)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -124,6 +101,8 @@ def admin():
     aniversariantes = cur.fetchall()
     cur.execute("SELECT * FROM compliance ORDER BY id DESC")
     compliance = cur.fetchall()
+    cur.execute("SELECT * FROM noticias_externas ORDER BY data_publicacao DESC, criado_em DESC")
+    noticias_externas = cur.fetchall()
     cur.close()
 
     #Criar uma postagem
@@ -183,21 +162,31 @@ def admin():
         flash('Link rápido criado com sucesso!', 'success')
         return redirect(url_for('admin'))
     
-    #Criar um ramal
-    elif form_type == 'ramal':
-        andar = request.form['andar']
-        setor = request.form['setor']
-        ramal = request.form['ramal']
+      #Criar uma notícia externa
+    elif form_type == 'noticia_externa':
+        titulo = request.form['titulo']
+        link = request.form['link']
+        descricao = request.form.get('descricao', '')
+        data_publicacao = request.form.get('data_publicacao') or datetime.today().strftime('%Y-%m-%d')
+
+        imagem_file = request.files.get('imagem')
+        imagem_path = None
+
+        if imagem_file and imagem_file.filename != '' and allowed_file(imagem_file.filename):
+            ext = imagem_file.filename.rsplit('.', 1)[1].lower()
+            nome_unico = f"{uuid.uuid4()}.{ext}"
+            imagem_file.save(os.path.join(UPLOAD_FOLDER, nome_unico))
+            imagem_path = f'uploads/{nome_unico}'
 
         cur = mysql.connection.cursor()
         cur.execute("""
-            INSERT INTO ramais (andar, setor, ramal)
-            VALUES (%s, %s, %s)
-        """, (andar, setor, ramal))
+            INSERT INTO noticias_externas (titulo, link, descricao, imagem, data_publicacao)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (titulo, link, descricao, imagem_path, data_publicacao))
         mysql.connection.commit()
         cur.close()
 
-        flash('Ramal adicionado com sucesso!', 'success')
+        flash('Notícia externa criada com sucesso!', 'success')
         return redirect(url_for('admin'))
 
     #Criar um aniversario
@@ -244,7 +233,7 @@ def admin():
 
         return redirect(url_for('admin'))
 
-    return render_template('admin.html', comunicados=comunicados, links_rapidos=links_rapidos, ramais=ramais, aniversariantes=aniversariantes, compliance=compliance)
+    return render_template('admin.html', comunicados=comunicados, links_rapidos=links_rapidos, ramais=ramais, aniversariantes=aniversariantes, compliance=compliance, noticias_externas=noticias_externas)
 
 @app.route('/admin/comunicado/deletar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
@@ -460,6 +449,61 @@ def editar_compliance(id):
     else:
         flash('Erro ao atualizar imagem.', 'danger')
 
+    return redirect(url_for('admin'))
+
+# Editar notícia externa (GET e POST)
+@app.route('/admin/noticia-externa/editar/<int:id>', methods=['GET', 'POST'])
+@login_required(roles=['comunicacao', 'admin'])
+def editar_noticia_externa(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    if request.method == 'POST':
+        titulo = request.form['titulo']
+        link = request.form['link']
+        descricao = request.form.get('descricao', '')
+        data_publicacao = request.form.get('data_publicacao')
+
+        imagem_file = request.files.get('imagem')
+
+        # Buscar dados atuais
+        cur.execute("SELECT imagem FROM noticias_externas WHERE id = %s", (id,))
+        antigo = cur.fetchone()
+        imagem_path = antigo['imagem']
+
+        # Upload nova imagem
+        if imagem_file and imagem_file.filename != '' and allowed_file(imagem_file.filename):
+            ext = imagem_file.filename.rsplit('.', 1)[1].lower()
+            nome_unico = f"{uuid.uuid4()}.{ext}"
+            imagem_file.save(os.path.join(UPLOAD_FOLDER, nome_unico))
+            imagem_path = f'uploads/{nome_unico}'
+
+        cur.execute("""
+            UPDATE noticias_externas
+            SET titulo = %s, link = %s, descricao = %s, imagem = %s, data_publicacao = %s
+            WHERE id = %s
+        """, (titulo, link, descricao, imagem_path, data_publicacao, id))
+        mysql.connection.commit()
+        cur.close()
+
+        flash('Notícia externa atualizada com sucesso!', 'success')
+        return redirect(url_for('admin'))
+
+    # GET - busca pra preencher o form
+    cur.execute("SELECT * FROM noticias_externas WHERE id = %s", (id,))
+    noticia = cur.fetchone()
+    cur.close()
+
+    return render_template('editar_noticia_externa.html', noticia=noticia)
+
+# Deletar notícia externa
+@app.route('/admin/noticia-externa/deletar/<int:id>', methods=['POST'])
+@login_required(roles=['comunicacao', 'admin'])
+def deletar_noticia_externa(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM noticias_externas WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    flash('Notícia externa deletada com sucesso!', 'success')
     return redirect(url_for('admin'))
 
 if __name__ == '__main__':
