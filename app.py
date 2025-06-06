@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_mysqldb import MySQL
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from config import Config
@@ -56,6 +56,7 @@ def home():
 
     return render_template('publica.html', posts=posts, links=links , aniversariantes=aniversariantes, compliance=compliance, noticias_externas=noticias_externas)
 
+# -------- ROTA LOGIN ---------- #
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -78,12 +79,13 @@ def login():
 
     return render_template('login.html')
 
+# -------- ROTA LOGOUT ---------- #
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('login'))
 
-# -------- ROTA ADMIN e COMUNICACAO -------- #
+# -------- ROTA ADMIN -------- #
 @app.route('/admin', methods=['GET', 'POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def admin():
@@ -235,6 +237,77 @@ def admin():
 
     return render_template('admin.html', comunicados=comunicados, links_rapidos=links_rapidos, ramais=ramais, aniversariantes=aniversariantes, compliance=compliance, noticias_externas=noticias_externas)
 
+# -------- ROTA USUARIOS ---------- #
+@app.route('/admin/usuarios', methods=['GET'])
+@login_required(roles=['admin'])
+def listar_usuarios():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM usuarios")
+    usuarios = cursor.fetchall()
+    cursor.close()
+    return render_template('usuarios.html', usuarios=usuarios)
+
+# -------- ROTA CRIAR USUARIOS ---------- #
+@app.route('/admin/usuarios/criar', methods=['POST'])
+@login_required(roles=['admin'])
+def criar_usuario():
+    nome = request.form['nome']
+    email = request.form['email']
+    senha = request.form['senha']
+    tipo = request.form['tipo']
+
+    senha_hash = generate_password_hash(senha)
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("INSERT INTO usuarios (nome, email, senha_hash, tipo) VALUES (%s, %s, %s, %s)",
+                   (nome, email, senha_hash, tipo))
+    mysql.connection.commit()
+    cursor.close()
+    flash('Usuário criado com sucesso!')
+    return redirect(url_for('listar_usuarios'))
+
+# -------- ROTA EDITAR USUARIOS ---------- #
+@app.route('/admin/usuarios/editar/<int:id>', methods=['POST'])
+@login_required(roles=['admin'])
+def editar_usuario(id):
+    nome = request.form['nome']
+    email = request.form['email']
+    senha = request.form['senha']
+    tipo = request.form['tipo']
+
+    cursor = mysql.connection.cursor()
+
+    if senha:
+        senha_hash = generate_password_hash(senha)
+        cursor.execute("""
+            UPDATE usuarios 
+            SET nome=%s, email=%s, senha_hash=%s, tipo=%s 
+            WHERE id=%s
+        """, (nome, email, senha_hash, tipo, id))
+    else:
+        cursor.execute("""
+            UPDATE usuarios 
+            SET nome=%s, email=%s, tipo=%s 
+            WHERE id=%s
+        """, (nome, email, tipo, id))
+
+    mysql.connection.commit()
+    cursor.close()
+    flash('Usuário atualizado com sucesso!')
+    return redirect(url_for('listar_usuarios'))
+
+# -------- ROTA DELETAR USUARIOS ---------- #
+@app.route('/admin/usuarios/deletar/<int:id>', methods=['POST'])
+@login_required(roles=['admin'])
+def deletar_usuario(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM usuarios WHERE id = %s", (id,))
+    mysql.connection.commit()
+    cur.close()
+    flash('Usuário deletado com sucesso!', 'success')
+    return redirect(url_for('listar_usuarios'))
+
+# -------- ROTA DELETAR COMUNICADO ---------- #
 @app.route('/admin/comunicado/deletar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def deletar_comunicado(id):
@@ -245,6 +318,7 @@ def deletar_comunicado(id):
     flash('Comunicado deletado com sucesso!', 'success')
     return redirect(url_for('admin'))
 
+# -------- ROTA EDITAR COMUNICADO ---------- #
 @app.route('/admin/comunicado/editar/<int:id>', methods=['GET', 'POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def editar_comunicado(id):
@@ -300,6 +374,7 @@ def editar_comunicado(id):
 
     return render_template('editar_comunicado.html', comunicado=comunicado)
 
+# -------- ROTA EDITAR LINK RAPIDO ---------- #
 @app.route('/admin/link-rapido/editar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def editar_link_rapido(id):
@@ -319,6 +394,7 @@ def editar_link_rapido(id):
     flash('Link rápido atualizado com sucesso!', 'success')
     return redirect(url_for('admin'))
 
+# -------- ROTA DELETAR LINK RAPIDO ---------- #
 @app.route('/admin/link-rapido/deletar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def deletar_link_rapido(id):
@@ -329,36 +405,7 @@ def deletar_link_rapido(id):
     flash('Link rápido deletado com sucesso!', 'success')
     return redirect(url_for('admin'))
 
-@app.route('/admin/ramal/editar/<int:id>', methods=['POST'])
-@login_required(roles=['comunicacao', 'admin'])
-def editar_ramal(id):
-    andar = request.form['andar']
-    setor = request.form['setor']
-    ramal = request.form['ramal']
-
-    cur = mysql.connection.cursor()
-    cur.execute("""
-        UPDATE ramais
-        SET andar = %s, setor = %s, ramal = %s
-        WHERE id = %s
-    """, (andar, setor, ramal, id))
-    mysql.connection.commit()
-    cur.close()
-
-    flash('Ramal atualizado com sucesso!', 'success')
-    return redirect(url_for('admin'))
-
-@app.route('/admin/ramal/deletar/<int:id>', methods=['POST'])
-@login_required(roles=['comunicacao', 'admin'])
-def deletar_ramal(id):
-    cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM ramais WHERE id = %s", (id,))
-    mysql.connection.commit()
-    cur.close()
-
-    flash('Ramal deletado com sucesso!', 'success')
-    return redirect(url_for('admin'))
-
+# -------- ROTA DELETAR ANIVERSARIANTE ---------- #
 @app.route('/admin/aniversariante/deletar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def deletar_aniversariante(id):
@@ -376,6 +423,7 @@ def deletar_aniversariante(id):
     flash('Aniversariante deletado com sucesso!', 'success')
     return redirect(url_for('admin'))
 
+# -------- ROTA EDITAR ANIVERSARIANTE ---------- #
 @app.route('/admin/aniversariante/editar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def editar_aniversariante(id):
@@ -405,6 +453,7 @@ def editar_aniversariante(id):
 
     return redirect(url_for('admin'))
 
+# -------- ROTA DELETAR COMPLIANCE ---------- #
 @app.route('/admin/compliance/deletar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def deletar_compliance(id):
@@ -422,6 +471,7 @@ def deletar_compliance(id):
     flash('Compliance deletado com sucesso!', 'success')
     return redirect(url_for('admin'))
 
+# -------- ROTA EDITAR ANIVERSARIANTE ---------- #
 @app.route('/admin/compliance/editar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def editar_compliance(id):
@@ -451,7 +501,7 @@ def editar_compliance(id):
 
     return redirect(url_for('admin'))
 
-# Editar notícia externa (GET e POST)
+# -------- ROTA EDITAR NOTICIA EXTERNA ---------- #
 @app.route('/admin/noticia-externa/editar/<int:id>', methods=['GET', 'POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def editar_noticia_externa(id):
@@ -495,7 +545,7 @@ def editar_noticia_externa(id):
 
     return render_template('editar_noticia_externa.html', noticia=noticia)
 
-# Deletar notícia externa
+# -------- ROTA DELETAR NOTICIA EXTERNA ---------- #
 @app.route('/admin/noticia-externa/deletar/<int:id>', methods=['POST'])
 @login_required(roles=['comunicacao', 'admin'])
 def deletar_noticia_externa(id):
@@ -505,6 +555,7 @@ def deletar_noticia_externa(id):
     cur.close()
     flash('Notícia externa deletada com sucesso!', 'success')
     return redirect(url_for('admin'))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
