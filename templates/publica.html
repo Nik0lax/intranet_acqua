@@ -120,6 +120,10 @@
             onmouseout="this.style.backgroundColor='';">Manutenção</a></li>
             <li><a class="dropdown-item" href="https://mgmedical.neovero.com/login" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">Engenharia Clinica</a></li>
+            <li><a class="dropdown-item" href="172.16.10.131/clasi" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">Limpeza</a></li>
+            <li><a class="dropdown-item" href="http://172.16.10.131/patrimonio/" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            onmouseout="this.style.backgroundColor='';">Patrimônio</a></li>
           </ul>
         </li>
 
@@ -136,7 +140,7 @@
         
         <!-- Link para o WhatsApp do TI -->
         <li class="nav-item d-flex align-items-center">
-          <a href="#" target="_blank" class="nav-link text-success fw-bold">
+          <a href="https://web.whatsapp.com/send/?phone=5591988581306&text&type=phone_number&app_absent=0" target="_blank" class="nav-link text-success fw-bold">
             WhatsApp TI <i class="fab fa-whatsapp me-1"></i> 
           </a>
         </li>
@@ -207,7 +211,7 @@
                     <div class="card-header" style="background-color: #3EB6AB; color: white;">
                     Links Rápidos
                     </div>
-                    <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+                    <div class="card-body p-0" style="max-height: 300px; overflow-y: auto;">
                     <ul class="list-group list-group-flush">
                         {% for link in links %}
                         {% set icon_map = {
@@ -227,47 +231,6 @@
                         {% endfor %}
                     </ul>
                     </div>
-                </div>
-              </div>
-              <!-- Compliance -->
-              <div class="w-50" style="max-height: 300px; overflow-y: auto;">
-                <div class="card h-100">
-                  <div class="card-header" style="background-color: #3EB6AB; color: white;">
-                    Compliance
-                  </div>
-                  <div class="card-body p-2">
-                  {% if compliance|length > 0 %}
-                    <div id="carouselCompliance" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
-                      <!-- Indicators/dots -->
-                      <div class="carousel-indicators">
-                        {% for i in range(compliance|length) %}
-                          <button type="button" data-bs-target="#carouselCompliance" data-bs-slide-to="{{ i }}" class="{% if i == 0 %}active{% endif %}" aria-current="{% if i == 0 %}true{% endif %}" aria-label="Slide {{ i + 1 }}"></button>
-                        {% endfor %}
-                      </div>
-
-                      <!-- Slides -->
-                      <div class="carousel-inner">
-                        {% for item in compliance %}
-                          <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
-                            <img src="{{ url_for('static', filename=item[1]) }}" class="d-block mx-auto img-thumbnail" alt="Compliance" style="max-height: 230px; object-fit: contain;">
-                          </div>
-                        {% endfor %}
-                      </div>
-
-                      <!-- Controls -->
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselCompliance" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Anterior</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselCompliance" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Próximo</span>
-                      </button>
-                    </div>
-                  {% else %}
-                    <p class="text-muted text-center">Nenhuma imagem de compliance cadastrada.</p>
-                  {% endif %}
-                </div>
                 </div>
               </div>
               <!-- Aniversário-->
@@ -291,7 +254,7 @@
                         <div class="carousel-inner">
                           {% for aniversariante in aniversariantes %}
                             <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
-                              <img src="{{ url_for('static', filename=aniversariante[1]) }}" class="d-block mx-auto img-thumbnail" alt="Aniversariante" style="max-height: 230px; object-fit: contain;">
+                              <img src="{{ url_for('static', filename=aniversariante[1]) }}" class="d-block mx-auto img-thumbnail" alt="Aniversariante" style="max-height: 200px; object-fit: contain;">
                               <!-- Se quiser exibir nome, pode colocar aqui, ex: -->
                               <!-- <div class="carousel-caption d-none d-md-block">
                                 <h5>{{ aniversariante[2] }}</h5>
@@ -317,10 +280,51 @@
                   </div>
                 </div>
               </div>
+               <!-- Compliance -->
+              <div class="w-50" style="max-height: 300px; overflow-y: auto;">
+                <div class="card h-100">
+                  <div class="card-header" style="background-color: #3EB6AB; color: white;">
+                    Compliance
+                  </div>
+                  <div class="card-body p-2">
+                  {% if compliance|length > 0 %}
+                    <div id="carouselCompliance" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
+                      <!-- Indicators/dots -->
+                      <div class="carousel-indicators">
+                        {% for i in range(compliance|length) %}
+                          <button type="button" data-bs-target="#carouselCompliance" data-bs-slide-to="{{ i }}" class="{% if i == 0 %}active{% endif %}" aria-current="{% if i == 0 %}true{% endif %}" aria-label="Slide {{ i + 1 }}"></button>
+                        {% endfor %}
+                      </div>
+
+                      <!-- Slides -->
+                      <div class="carousel-inner">
+                        {% for item in compliance %}
+                          <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+                            <img src="{{ url_for('static', filename=item[1]) }}" class="d-block mx-auto img-thumbnail" alt="Compliance" style="max-height: 200px; object-fit: contain;">
+                          </div>
+                        {% endfor %}
+                      </div>
+
+                      <!-- Controls -->
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselCompliance" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselCompliance" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Próximo</span>
+                      </button>
+                    </div>
+                  {% else %}
+                    <p class="text-muted text-center">Nenhuma imagem de compliance cadastrada.</p>
+                  {% endif %}
+                </div>
+                </div>
+              </div>
             </div>  
 
             <!-- Notícias Externas -->
-            <div style="height: 270px;">
+            <div style="height: 250px;">
               <div class="card h-100 d-flex flex-column">
                 <div class="card-header" style="background-color: #3EB6AB; color: white;">
                   Notícias Externas
