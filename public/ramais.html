@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///C:/Users/jose.neto/Downloads/Lista%20de%20Ramais.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Lista de Ramais</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+      color: #2c3e50;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1a73e8;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .search-container {
+      max-width: 500px;
+      margin: 0 auto 30px;
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 10px 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-container:focus-within {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .search-container i {
+      color: #888;
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+
+    .search-container input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 16px;
+      background: transparent;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    thead {
+      background-color: #1a73e8;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    thead th {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9fbfc;
+    }
+
+    tbody tr:hover {
+      background-color: #e3f2fd;
+      transition: background-color 0.3s;
+    }
+
+    @media print {
+  body {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 12pt;
+  }
+  h1 {
+    color: black !important;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .search-container,
+  button {
+    display: none !important; /* esconde busca e botões na impressão */
+  }
+  table {
+    box-shadow: none !important;
+    border: 1px solid black !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+  }
+  thead {
+    background-color: #3498db !important;
+    color: white !important;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2 !important;
+  }
+  tbody tr:hover {
+    background-color: transparent !important;
+  }
+  td, th {
+    padding: 8px !important;
+    border: 1px solid black !important;
+  }
+}
+  </style> 
+
+  <script src="file:///C:/Users/jose.neto/Downloads/Lista%20de%20Ramais_files/a076d05399.js.baixados" crossorigin="anonymous"></script>
+</head>
+<body>
+  <h1>Lista de Ramais</h1>
+
+  <div class="search-container">
+    <i class="fas fa-search"></i>
+    <input type="text" id="searchInput" placeholder="Buscar por setor, andar ou ramal...">
+  </div>
+  <div style="text-align: center; margin-bottom: 20px;">
+  
+</div>
+  <table id="ramaisTable">
+    <thead>
+      <tr>
+        <th><i class="fas fa-layer-group"></i> Andar</th>
+        <th><i class="fas fa-building"></i> Setor</th>
+        <th><i class="fas fa-phone"></i> Ramal</th>
+        <th><i class="fas fa-phone-square-alt"></i> Linha</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- TODO: Insira aqui as <tr> com os dados como você já tem no seu código -->
+      <tr><td>Térreo</td><td>Recepção SADT</td><td>232</td><td>(91)31976328</td></tr>
+      <tr><td>Térreo</td><td>Recepção Visitante</td><td>220</td><td></td></tr>
+      <tr><td>Térreo</td><td>Recepção Urgência</td><td>200</td><td></td></tr>
+      <tr><td>Térreo</td><td>Recepção Internação Eletiva</td><td>226</td><td></td></tr>
+      <tr><td>Térreo</td><td>Sala Amarela</td><td>201</td><td></td></tr>
+      <tr><td>Térreo</td><td>Ressonância</td><td>242</td><td></td></tr>
+      <tr><td>Térreo</td><td>Tomografia</td><td>243</td><td></td></tr>
+      <tr><td>Térreo</td><td>Assistencia Social</td><td>237</td><td>(91)31976333</td></tr>
+
+      <tr><td>1° Andar</td><td>Recepção Check-in/Check-out</td><td>236</td><td></td></tr>
+      <tr><td>1° Andar</td><td>Recepção 01</td><td>246</td><td></td></tr>
+      <tr><td>1° Andar</td><td>Recepção 02</td><td>248</td><td></td></tr>
+      <tr><td>1° Andar</td><td>Recepção 03</td><td>241</td><td></td></tr>
+      <tr><td>1° Andar</td><td>Recepção 04</td><td>204</td><td></td></tr>
+      <tr><td>1° Andar</td><td>Recepção 05</td><td>211</td><td></td></tr>
+      <tr><td>1° Andar</td><td>NIR</td><td>234</td><td>(91)31976322</td></tr>
+      <tr><td>1° Andar</td><td>SCIRAS</td><td>239</td><td>(91)31976329</td></tr>
+      <tr><td>1° Andar</td><td>SAU</td><td>299</td><td>(91)31976343</td></tr>
+
+      <tr><td>2° Andar</td><td>Cozinha</td><td>250</td><td></td></tr>
+      <tr><td>2° Andar</td><td>Nutrição Clinica</td><td>247</td><td></td></tr>
+      <tr><td>2° Andar</td><td>Faturamento</td><td>240</td><td></td></tr>
+
+      <tr><td>3° Andar</td><td>CAF</td><td>207</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Almoxarifado</td><td>254</td><td></td></tr>
+      <tr><td>3° Andar</td><td>CME</td><td>222</td><td></td></tr>
+      <tr><td>3° Andar</td><td>HEMOPA</td><td>218</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Lavanderia</td><td>233</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Laboratório</td><td>253</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Gerência de Enfermagem</td><td>216</td><td></td></tr> 
+      <tr><td>3° Andar</td><td>Recepção Direção</td><td>213</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Direção Administrativa</td><td>244</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Direção Geral</td><td>221</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Direção Assistencial</td><td>223</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Recursos Humanos</td><td>209</td><td></td></tr>
+      <tr><td>3° Andar</td><td>Compras</td><td>252</td><td></td></tr>
+      <tr><td>3° Andar</td><td>SAME</td><td>251</td><td></td></tr>
+
+      <tr><td>4° Andar</td><td>Bloco Cirúrgico</td><td>215</td><td></td></tr>
+      <tr><td>4° Andar</td><td>TI</td><td>*5130</td><td></td></tr>
+
+      <tr><td>5° Andar</td><td>UTI</td><td>208</td><td></td></tr>
+      <tr><td>5° Andar</td><td>Telemedicina</td><td>238</td><td></td></tr>
+
+      <tr><td>6° Andar</td><td>Posto Internação 6</td><td>212</td><td></td></tr>
+
+      <tr><td>7° Andar</td><td>Posto Internação 7</td><td>210</td><td></td></tr>
+
+      <tr><td>8° Andar</td><td>Posto Internação 8</td><td>206</td><td></td></tr>
+      <tr><td>8° Andar</td><td>Farmácia Central</td><td>217</td><td></td></tr>
+
+      <tr><td>9° Andar</td><td>Posto Internação 9</td><td>214</td><td></td></tr>
+
+      <tr><td>10° Andar</td><td>Posto Internação 10</td><td>230</td><td></td></tr>
+
+    </tbody>
+  </table>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const table = document.getElementById('ramaisTable');
+    const rows = table.querySelectorAll('tbody tr');
+
+    searchInput.addEventListener('keyup', function () {
+      const query = this.value.toLowerCase();
+      rows.forEach(row => {
+        const rowText = row.innerText.toLowerCase();
+        row.style.display = rowText.includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+
+
+
+</body></html>
