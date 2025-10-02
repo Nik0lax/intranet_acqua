@@ -14,24 +14,20 @@ Repositório da Intranet corporativa **Acqua**, desenvolvida em Flask com integr
 
 ## Alterações Recentes
 
-### Segunda Alteração
+### Terceira Alteração
 
-**Data:** 20/09/2025  
-**Descrição:** Correção de layout e modal de imagens.  
+**Data:** 02/10/2025  
+**Descrição:** Correção de layout e link de comunicador oficial.  
 
 **Detalhes das alterações:**
 
 1. **Layout Responsivo:**
-   - Ajuste das seções de **Aniversariantes** e **Compliance** para usar a mesma estrutura de cards.
-   - Uso de `overflow-y: auto` nos cards, garantindo scroll interno apenas dentro dos cards, evitando scroll global na página.
+   - Ajuste das seções de **Links Rápidos**, **Aniversariantes** e **Compliance** para usar a mesma estrutura de cards.
+   - Remobido o `overflow-y: auto` nos cards **Aniversariantes** e **Compliance**.
    - Estrutura agora consistente e responsiva, mantendo a posição dos cards e imagens intacta.
 
-2. **Modal de Imagem:**
-   - Corrigido bug que abria múltiplos modais ao clicar várias vezes.
-   - Instância do modal criada uma única vez.
-   - Clique em uma imagem atualiza o modal e o abre.
-   - Clique fora da imagem fecha o modal.
-   - Comportamento: **um click abre, outro fecha**, evitando empilhamento de modais.
+2. **Alterado Fale com a TI para Rocket.Chat**
+   - Implantado o Comunicador Oficial da Unidade.
 
 ---
 
