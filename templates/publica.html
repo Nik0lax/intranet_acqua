@@ -125,7 +125,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Abrir Chamados</a>
           <ul class="dropdown-menu" style="background-color: #207D9E; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 6px;">
-            <li><a class="dropdown-item" href="http://glpi/glpi/front/central.php" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            <li><a class="dropdown-item" href="http://172.16.10.131/index.php?" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">TI</a></li>
             <li><a class="dropdown-item" href="http://glpi/manutencao/" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">Manutenção</a></li>
@@ -133,7 +133,7 @@
             onmouseout="this.style.backgroundColor='';">Engenharia Clinica</a></li>
             <li><a class="dropdown-item" href="http://172.16.10.131/same/" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">Same</a></li>
-            <li><a class="dropdown-item" href="http://172.16.10.131/patrimonio/" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
+            <li><a class="dropdown-item" href="http://172.16.10.131:8082/" style="color: white !important; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#555';" 
             onmouseout="this.style.backgroundColor='';">Patrimônio</a></li>
           </ul>
         </li>
@@ -149,10 +149,15 @@
           </ul>
         </li>
         
-        <!-- Link para o WhatsApp do TI -->
+        <!-- Link para o Rocket.Chat -->
         <li class="nav-item d-flex align-items-center">
-          <a href="/static/img/qrcode_ti.png" target="_blank" class="nav-link text-success fw-bold">
-            Fale com a TI <i class="fab fa-whatsapp me-1"></i> 
+          <a href="http://172.16.4.1:8050/home" target="_blank" class="nav-link text-danger fw-bold">
+            Rocket.Chat
+            <img src="{{ url_for('static', filename='img/logo_rocket.png') }}" 
+                alt="Rocket.Chat" 
+                width="25" 
+                height="22" 
+                class="ms-1">
           </a>
         </li>
 
@@ -217,7 +222,7 @@
           <div class="d-flex flex-column gap-3">
             <div class="d-flex justify-content-between gap-3">
               <!-- Links Rápidos -->
-              <div class="w-50" style="max-height: 300px; overflow-y: auto;">           
+              <div class="w-50" style="max-height: 250px; overflow-y: auto;">           
                 <div class="card bg-light h-100">
                     <div class="card-header" style="background-color: #3EB6AB; color: white;">
                     Links Rápidos
@@ -245,7 +250,7 @@
                 </div>
               </div>
               <!-- Aniversário-->
-              <div class="w-50" style="max-height: 300px; overflow-y: auto;">
+              <div class="w-50" style="max-height: 250px">
                 <div class="card h-100">
                     <div class="card-header" style="background-color: #3EB6AB; color: white;">
                       Aniversariantes do Mês
@@ -264,7 +269,7 @@
                         <div class="carousel-inner">
                           {% for aniversariante in aniversariantes %}
                             <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
-                              <img src="{{ url_for('static', filename=aniversariante[1]) }}" class="d-block mx-auto img-thumbnail" alt="Aniversariante" style="max-height: 200px; object-fit: contain;">
+                              <img src="{{ url_for('static', filename=aniversariante[1]) }}" class="d-block mx-auto img-thumbnail" alt="Aniversariante" style="max-height: 180px; object-fit: contain;">
                             </div>
                           {% endfor %}
                         </div>
@@ -286,7 +291,7 @@
                 </div>
               </div>
                <!-- Compliance -->
-              <div class="w-50" style="max-height: 300px; overflow-y: auto;">
+              <div class="w-50" style="max-height: 250px">
                 <div class="card h-100">
                   <div class="card-header" style="background-color: #3EB6AB; color: white;">
                     Compliance
@@ -298,7 +303,7 @@
                       <div class="carousel-inner">
                         {% for item in compliance %}
                           <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
-                            <img src="{{ url_for('static', filename=item[1]) }}" class="d-block mx-auto img-thumbnail" alt="Compliance" style="max-height: 200px; object-fit: contain;">
+                            <img src="{{ url_for('static', filename=item[1]) }}" class="d-block mx-auto img-thumbnail" alt="Compliance" style="max-height: 180px; object-fit: contain;">
                           </div>
                         {% endfor %}
                       </div>
